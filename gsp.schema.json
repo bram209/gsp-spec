@@ -54,7 +54,7 @@
           "$ref": "#/definitions/ActSelection"
         },
         "actCreation": {
-          "$ref": "#/definitions/ActActCreation"
+          "$ref": "#/definitions/ActCreation"
         },
         "bulkActOf": {
           "$ref": "#/definitions/BulkActOf"
