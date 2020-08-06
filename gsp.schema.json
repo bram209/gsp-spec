@@ -310,11 +310,11 @@
     },
     "InputBatchSpecifier": {
       "type": "string",
-      "pattern": "^inputs\\d$"
+      "pattern": "^inputs\\[\\d*\\]"
     },
     "OutputBatchSpecifier": {
       "type": "string",
-      "pattern": "^outputs\\d$"
+      "pattern": "^outputs\\[\\d*\\]"
     },
     "CopyBatchSpecifier": {
       "type": "string",
