@@ -1,0 +1,386 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$ref": "#/definitions/Supplychain",
+  "definitions": {
+    "Supplychain": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "assets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Asset"
+          }
+        },
+        "acts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Act"
+          }
+        }
+      },
+      "required": [
+        "acts",
+        "assets"
+      ],
+      "title": "Batch"
+    },
+    "Act": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssetId"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AssetId"
+          }
+        },
+        "actExecution": {
+          "$ref": "#/definitions/ActExecution"
+        },
+        "assignable": {
+          "type": "boolean"
+        },
+        "actSelection": {
+          "$ref": "#/definitions/ActSelection"
+        },
+        "actCreation": {
+          "$ref": "#/definitions/ActActCreation"
+        },
+        "bulkActOf": {
+          "$ref": "#/definitions/BulkActOf"
+        }
+      },
+      "required": [
+        "id",
+        "inputs",
+        "outputs"
+      ],
+      "title": "Act"
+    },
+    "Schema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "injections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SchemaInjection"
+          }
+        }
+      },
+      "required": [
+        "injections",
+        "path"
+      ],
+      "title": "SchemaClass"
+    },
+    "SchemaInjection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataPath": {
+          "type": "string"
+        },
+        "insertAtPointer": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dataPath",
+        "insertAtPointer"
+      ],
+      "title": "Injection"
+    },
+    "Variables": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/VariableUnion"
+      },
+      "title": "Variables"
+    },
+    "DataSourceResolver": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dataSourceId": {
+          "type": "string"
+        },
+        "args": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "dataSourceId"
+      ],
+      "title": "DataSourceResolver"
+    },
+    "ActExecution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Action"
+          }
+        },
+        "copies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InputBatchSpecifier"
+          }
+        }
+      },
+      "required": [
+        "actions"
+      ],
+      "title": "ActExecution"
+    },
+    "Action": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/ActionId"
+        },
+        "executeOn": {
+          "$ref": "#/definitions/BatchSpecifierUnion"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "executeOn",
+        "id"
+      ],
+      "title": "Action"
+    },
+    "ActSelection": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requiresLegalOwner": {
+          "type": "boolean",
+          "default": true
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsonPath"
+          }
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "title": "ActSelection"
+    },
+    "BulkActOf": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/ChildAct"
+      },
+      "title": "BulkActOf"
+    },
+    "ChildAct": {
+      "type": "object",
+      "properties": {
+        "multiple": {
+          "type": "boolean"
+        },
+        "minimum": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maximum": {
+          "type": "number",
+          "minimum": 1
+        },
+        "actCreation": {
+          "$ref": "#/definitions/ActCreation"
+        },
+        "actExecution": {
+          "$ref": "#/definitions/ActExecution"
+        }
+      },
+      "required": [
+        "multiple"
+      ]
+    },
+    "ActCreation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        },
+        "schema": {
+          "$ref": "#/definitions/Schema"
+        },
+      },
+      "required": [
+        "schema",
+        "variables"
+      ],
+      "title": "ActCreation"
+    },
+    "Asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "assetCreation": {
+          "$ref": "#/definitions/AssetCreation"
+        },
+        "batchCreation": {
+          "$ref": "#/definitions/BatchCreation"
+        },
+        "parent": {
+          "$ref": "#/definitions/AssetId"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "Asset"
+    },
+    "AssetCreation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/SchemaUnion"
+        },
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "title": "AssetCreation"
+    },
+    "BatchCreation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/SchemaUnion"
+        },
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "title": "BatchCreation"
+    },
+    "SchemaUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Schema"
+        },
+        {
+          "type": "string",
+          "format": "uri"
+        }
+      ],
+      "title": "SchemaUnion"
+    },
+    "VariableUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/DataSourceResolver"
+        },
+        {
+          "$ref": "#/definitions/JsonPath"
+        }
+      ],
+      "title": "VariableUnion"
+    },
+    "JsonPath": {
+      "type": "string",
+      "pattern": "^\\$",
+      "title": "JsonPath"
+    },
+    "BatchSpecifierUnion": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/InputBatchSpecifier"
+        },
+        {
+          "$ref": "#/definitions/OutputBatchSpecifier"
+        },
+        {
+          "$ref": "#/definitions/CopyBatchSpecifier"
+        }
+      ],
+      "title": "BatchSpecifier"
+    },
+    "InputBatchSpecifier": {
+      "type": "string",
+      "pattern": "^inputs\\d$"
+    },
+    "OutputBatchSpecifier": {
+      "type": "string",
+      "pattern": "^outputs\\d$"
+    },
+    "CopyBatchSpecifier": {
+      "type": "string",
+      "pattern": "^copies\\d$"
+    },
+    "AssetId": {
+      "type": "string",
+      "enum": [
+        "vegetable",
+        "asset",
+        "fruit",
+        "juice"
+      ],
+      "title": "AssetId"
+    },
+    "ActionId": {
+      "type": "string",
+      "enum": [
+        "BurnAll",
+        "ClearAssignedActs",
+        "ChangeStatus",
+        "AssignActs",
+        "ChangeDataProperty",
+        "ChangeLegalOwner",
+        "ChangePhysicalOwner",
+        "Produce",
+        "ProducePackages",
+        "Burn",
+        "BurnPackages",
+        "ProduceInventory",
+        "BurnInventory"
+      ],
+      "title": "ActionId"
+    }
+  }
+}
