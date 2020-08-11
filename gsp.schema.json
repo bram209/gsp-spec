@@ -322,7 +322,7 @@
     },
     "AssetId": {
       "type": "string",
-      "enum": ["vegetable", "asset", "fruit", "juice"],
+      "$ref": "assets.schema.json",
       "title": "AssetId"
     },
     "ActionId": {
