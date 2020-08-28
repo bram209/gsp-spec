@@ -322,7 +322,6 @@
     },
     "AssetId": {
       "type": "string",
-      "$ref": "file:./asset.schema.json",
       "title": "AssetId"
     },
     "ActionId": {
