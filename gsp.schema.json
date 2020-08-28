@@ -212,10 +212,10 @@
           "$ref": "#/definitions/Variables"
         },
         "schema": {
-          "$ref": "#/definitions/Schema"
+          "$ref": "#/definitions/SchemaUnion"
         }
       },
-      "required": ["schema", "variables"],
+      "required": ["schema"],
       "title": "ActCreation"
     },
     "Asset": {
